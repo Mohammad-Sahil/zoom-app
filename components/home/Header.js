@@ -3,8 +3,14 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <View>
-      <Text>Header</Text>
+    <View style={styles.container}>
+      <Text>Sahil</Text>
     </View>
   )
 }
+
+const styles =  StyleSheet.create({
+  container: {
+    color:  "white"
+  }
+})
