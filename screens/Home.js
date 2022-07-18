@@ -6,13 +6,14 @@ import MenuButtons from '../components/home/MenuButtons'
 import ContactsMenu from '../components/home/ContactsMenu'
 import SafeAreaAndroid from "../components/SafeAreaAndroid";
 
-export default function Home() {
+
+export default function Home({ navigation }) {
   return (
    <SafeAreaAndroid>
       <View style={styles.container}>
         <Header/>
         <SearchBar/>
-        <MenuButtons/>
+        <MenuButtons navigation={navigation}/>
         <ContactsMenu/>
       </View>
    </SafeAreaAndroid>

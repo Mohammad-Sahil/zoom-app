@@ -28,13 +28,19 @@ const items = [
   
 ]
 
-export default function MenuButtons() {
+
+export default function MenuButtons({ navigation }) {
+  const openMeeting = () => {
+    navigation.navigate("Room")
+  }
   return (
     <View style={styles.container}>
     {items.map((data) => {
       return (
         <View key={data.id} style={styles.buttonContainer}>
-        <TouchableOpacity style={{
+        <TouchableOpacity
+        onPress={() => openMeeting()}
+        style={{
           ...styles.button,
           backgroundColor: data.customColor ? data.customColor : "#0470DC"
         }}>
