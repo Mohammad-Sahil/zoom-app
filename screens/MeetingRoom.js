@@ -1,81 +1,48 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SafeAreaAndroid from '../components/SafeAreaAndroid'
-import { TextInput } from 'react-native-gesture-handler'
+import StartMeeting from '../components/meeting/StartMeeting'
+import { io } from "socket.io-client"
+
 
 export default function MeetingRoom() {
   const [name, setName] = useState();
   const [roomId, setRoomId] = useState();
+  const [activeUsers, setActiveUsers] = useState()
+
+  const joinRoom = () => {
+    socket.emit('join-room', {
+      roomId: roomId,
+      userName: name
+    })
+  }
+
+  useEffect(() => {
+    const API_URL = "https://388b-2409-4063-6c0a-65e6-4a4-58c7-d314-a34d.ngrok.io/";
+    const socket = io(`${API_URL}`)
+    console.log("Sahil")
+    socket.on("connection", () => console.log("Connected"));
+    socket.on("all-users", (users) => {
+      console.log(users)
+      setActiveUsers(users)
+  });
+  },[])
+
   return (
     <SafeAreaAndroid>
       <View style={styles.container}>
-        <View style={styles.startMeetingContainer}>
-          <View style={styles.info}>
-            <TextInput
-              style={styles.TextInput}
-              value={name}
-              placeholder="Enter Name"
-              placeholderTextColor={'#767476'}
-              onChangeText={text => setName(text)}
-            />
-          </View>
-          <View style={styles.info}>
-              <TextInput
-                style={styles.TextInput}
-                value={roomId}
-                placeholder="Enter ID"
-                placeholderTextColor={'#767476'}
-                onChangeText={text => setRoomId(text)}
-              />
-          </View>
-          <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity
-              style={styles.startMeetingButton}
-              onPress={() => {}}
-            >
-              <Text style={styles.buttonText}>Start Meeting</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <StartMeeting
+          name={name}
+          setName={setName}
+          roomId={roomId}
+          setRoomId={setRoomId}
+          joinRoom={joinRoom}
+        />
       </View>
     </SafeAreaAndroid>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#1c1c1c',
-    flex: 1,
-  },
-  startMeetingContainer: {
 
-  },
-  info: {
-    width: '100%',
-    backgroundColor: '#373538',
-    height: 50,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#484648',
-    padding: 12,
-    justifyContent: 'center',
-    marginTop: 2,
-  },
-  TextInput: {
-    color: "white",
-    fontSize: 18,
-  },
-  startMeetingButton: {
-    width: 350,
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0470DC',
-    height: 50,
-    borderRadius: 15,
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: 'bold',
-  }
 })
