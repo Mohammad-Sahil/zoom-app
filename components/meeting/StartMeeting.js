@@ -28,7 +28,7 @@ export default function StartMeeting({ name, setName, roomId, setRoomId, joinRoo
     <View style={{ alignItems: 'center' }}>
       <TouchableOpacity
         style={styles.startMeetingButton}
-        onPress={() => joinRoom}
+        onPress={() =>joinRoom()}
       >
         <Text style={styles.buttonText}>Start Meeting</Text>
       </TouchableOpacity>
