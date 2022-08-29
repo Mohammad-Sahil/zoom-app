@@ -38,9 +38,9 @@ export default function MeetingRoom() {
 
   const __startCamera = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
-    if(status === "granted"){
+    if (status === "granted") {
       setStartCamera(true);
-    }else{
+    } else {
       Alert.alert("Camera Permission Denied");
     }
   }
@@ -56,55 +56,56 @@ export default function MeetingRoom() {
     __startCamera();
     console.log("Sahil")
     socket.on("connection", () => console.log("Connected"));
-  //   socket.on("all-users", (users) => {
-  //     console.log(users)
-  //     setActiveUsers(users)
-  // });
-  },[])
+    //   socket.on("all-users", (users) => {
+    //     console.log(users)
+    //     setActiveUsers(users)
+    // });
+  }, [])
 
   return (
     <SafeAreaAndroid>
       <View style={styles.container}>
-      {startCamera ? (
-        <View style={{ flex:1 }}>
-          <View style={styles.cameraContainer}>
-            <Camera
-              type={"front"}
-              style={{
-                width: activeUsers.length == 0 ? "100%" : 200,
-                height: activeUsers.length == 0 ? 570 : 200,
-              }}
-            >
-            </Camera>
-            {activeUsers.map((user, index) => {
-              return (
-                <View key={index} style={styles.activeUserContainer}>
-                    <Text style={{color: "white"}}>{user}</Text>
-                </View>
-              )
-            })}
+        {startCamera ? (
+          <View style={{ flex: 1 }}>
+            <View style={styles.cameraContainer}>
+              <Camera
+                type={"front"}
+                style={{
+                  width: activeUsers.length == 0 ? "100%" : 200,
+                  height: activeUsers.length == 0 ? 570 : 200,
+                }}
+              >
+                {/* jsut a commit  */}
+              </Camera>
+              {activeUsers.map((user, index) => {
+                return (
+                  <View key={index} style={styles.activeUserContainer}>
+                    <Text style={{ color: "white" }}>{user}</Text>
+                  </View>
+                )
+              })}
+            </View>
+            <View style={styles.menu}>
+              {listMenu.map((item) => {
+                return (
+                  <TouchableOpacity style={styles.tile} key={item.id}>
+                    <FontAwesome name={item.name} size={24} color="white" />
+                    <Text style={styles.textTile}>{item.title}</Text>
+                  </TouchableOpacity>
+                )
+              })}
+
+            </View>
           </View>
-          <View style={styles.menu}>
-          {listMenu.map((item) => {
-            return (
-              <TouchableOpacity style={styles.tile} key={item.id}>
-                <FontAwesome name={item.name} size={24} color="white"/>
-                <Text style={styles.textTile}>{item.title}</Text>
-            </TouchableOpacity>
-            )
-          })}
-            
-          </View>
-        </View>
-      ) : (
-        <StartMeeting
-          name={name}
-          setName={setName}
-          roomId={roomId}
-          setRoomId={setRoomId}
-          joinRoom={joinRoom}
-        />
-      )}
+        ) : (
+          <StartMeeting
+            name={name}
+            setName={setName}
+            roomId={roomId}
+            setRoomId={setRoomId}
+            joinRoom={joinRoom}
+          />
+        )}
       </View>
     </SafeAreaAndroid>
   )
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15
   },
-  tile:  {
+  tile: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 50,
